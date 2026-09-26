@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: analytics-engine
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/metrics_db
+    username: admin
+    password: secret
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      "[hibernate.jdbc.batch_size]": 500
+      "[hibernate.order_inserts]": true
+      "[hibernate.order_updates]": true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  kafka:
+    listener:
+      type: batch
+    consumer:
+      bootstrap-servers: localhost:9094
+      group-id: analytics-consumer-group
+      auto-offset-reset: earliest
+      max-poll-records: 500
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
