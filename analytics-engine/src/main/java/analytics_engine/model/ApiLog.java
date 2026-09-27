@@ -32,6 +32,10 @@ public class ApiLog {
         this.timestamp = timestamp;
     }
 
+    public ApiLog() {
+        //TODO Auto-generated constructor stub
+    }
+
     public String getTraceId() {
         return traceId;
     }
