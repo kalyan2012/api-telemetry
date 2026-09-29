@@ -3,7 +3,7 @@ spring:
     name: analytics-engine
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/metrics_db
+    url: jdbc:postgresql://localhost:5432/metrics_db?reWriteBatchedInserts=true
     username: admin
     password: secret
     driver-class-name: org.postgresql.Driver
@@ -11,7 +11,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       "[hibernate.jdbc.batch_size]": 500
       "[hibernate.order_inserts]": true
@@ -32,3 +32,11 @@ spring:
       max-poll-records: 500
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        fetch.min.bytes: 50000
+        fetch.max.wait.ms: 5000
+
+logging:
+  level:
+    org.springframework.kafka: DEBUG
+    org.apache.kafka: INFO

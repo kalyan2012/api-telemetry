@@ -1,0 +1,24 @@
+spring:
+  main:
+    web-application-type: none
+
+  kafka:
+    listener:
+      type: batch
+    consumer:
+      bootstrap-servers: localhost:9094
+      group-id: elastic-ingestion-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        fetch.min.bytes: 50000
+        fetch.max.wait.ms: 5000
+
+  elasticsearch:
+    uris: http://localhost:9200
+
+logging:
+  level:
+    org.springframework.kafka: DEBUG
+    org.apache.kafka: INFO

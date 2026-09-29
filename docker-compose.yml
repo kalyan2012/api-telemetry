@@ -15,6 +15,9 @@ services:
       - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://metrics-kafka:9092,EXTERNAL://localhost:9094
       - KAFKA_HEAP_OPTS=-Xms256m -Xmx256m
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
     deploy:
       resources:
         limits:
@@ -54,16 +57,16 @@ services:
 
   # 4. Search Engine
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
     container_name: metrics-es
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.4.5
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     deploy:
       resources:
         limits:
-          memory: 750M
+          memory: 1.5G
     ports:
       - "9200:9200"
     networks:

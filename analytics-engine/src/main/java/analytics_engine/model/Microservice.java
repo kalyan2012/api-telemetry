@@ -4,12 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity 
+@Entity
 @Table(name = "microservices")
 public class Microservice {
-    
+
     @Id
     private String serviceName;
+
+    protected Microservice() {
+    }
 
     public Microservice(String serviceName) {
         this.serviceName = serviceName;

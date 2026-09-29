@@ -75,7 +75,8 @@ public class LogGenerator {
                         counter.incrementAndGet();
                         System.out.println("Message sent: " + metadata.toString());
                     }
-                });
+                }).get();
+                System.out.println("SUCCESS: Message physically acknowledged by Kafka!");
             } catch (Exception e) {
                 System.out.println("Failed to send message: " + e.getMessage());
             }
@@ -105,7 +106,7 @@ public class LogGenerator {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Shutdown signal received. Cleaning up...");
-
+            producer.flush();
             scheduler.shutdown();
 
             try {
